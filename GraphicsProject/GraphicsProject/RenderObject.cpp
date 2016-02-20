@@ -22,7 +22,6 @@ RenderObject::RenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT)
 	m_pVertexShader = Shaders::GetInstance()->m_pGeneric_VS;
 	m_pPixelShader = Shaders::GetInstance()->m_pGeneric_PS;
 
-	//CreateDDSTextureFromFile(Renderer::theDevicePtr, L"vette_color.dds", NULL, &m_pTexture);
 	m_strTexture = "vette_color";
 	m_pTexture = TextureManager::GetInstance()->GetTexture(m_strTexture);
 
@@ -31,7 +30,7 @@ RenderObject::RenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT)
 
 RenderObject::~RenderObject()
 {
-
+	
 }
 
 void RenderObject::Render()
@@ -61,14 +60,11 @@ void RenderObject::Render()
 
 	Renderer::toShader->gMVP = temp;
 	Renderer::toShader->gWorld = IDENTITY;
-	/*XMStoreFloat4x4(&fIdentity, identity);
-	XMStoreFloat4x4(&Renderer::toShader->gMVP, temp);
-	XMStoreFloat4x4(&Renderer::toShader->gWorld, identity);*/
+
 	memcpy(data.pData, Renderer::toShader, sizeof(cb_DEFAULT));
 	context->Unmap(Renderer::constantBuffer, 0);
 
 	context->VSSetConstantBuffers(0, 1, &Renderer::constantBuffer);
 
-	//Renderer::theContextPtr->Draw(BufferManager::GetInstance()->vertexMap[m_strName]->bufferSize, 0);
 	Renderer::theContextPtr->DrawIndexed(BufferManager::GetInstance()->vertexMap[m_strName]->indexCount, 0, 0);
 }

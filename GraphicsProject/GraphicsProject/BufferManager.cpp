@@ -11,6 +11,7 @@ void BufferManager::unload()
 	{
 		iter->second->buffer->Release();
 		iter->second->iBuffer->Release();
+		delete vertexMap[iter->first];
 	}
 }
 
