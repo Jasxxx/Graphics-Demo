@@ -13,6 +13,7 @@ RenderList::~RenderList()
 	while (m_pHead)
 	{
 		RenderNode* temp = m_pHead->next;
+		delete m_pHead->object;
 		delete m_pHead;
 		m_pHead = temp;
 	}

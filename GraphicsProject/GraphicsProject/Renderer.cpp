@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "ConstantBuffers.h"
 #include "RenderList.h"
+#include "TextureManager.h"
 
 using namespace std;
 using namespace DirectX;
@@ -241,4 +242,12 @@ void Renderer::Shutdown()
 	ReleaseCOM(theSwapChainPtr);
 	ReleaseCOM(theContextPtr);
 	ReleaseCOM(theDevicePtr);
+
+	delete MainCamera;
+	delete toShader;
+
+	delete Shaders::GetInstance();
+	delete BufferManager::GetInstance();
+	delete TextureManager::GetInstance();
+	delete m_pRenderList;
 }

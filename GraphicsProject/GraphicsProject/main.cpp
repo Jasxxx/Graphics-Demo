@@ -97,6 +97,7 @@ bool MAIN_APP::ShutDown()
 {
 	Renderer::Shutdown();
 	UnregisterClass(L"DirectXApplication", application);
+
 	return true;
 }
 
@@ -110,7 +111,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	srand(unsigned int(time(0)));
 	MAIN_APP myApp(hInstance, (WNDPROC)WndProc);
-	MSG msg; ZeroMemory(&msg, sizeof(msg));
+	MSG msg; 
+	ZeroMemory(&msg, sizeof(msg));
 	while (msg.message != WM_QUIT && myApp.Run())
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
