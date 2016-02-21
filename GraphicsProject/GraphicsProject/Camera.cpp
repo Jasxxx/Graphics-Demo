@@ -3,9 +3,9 @@
 
 Camera::Camera()
 {
-	Float3 pos = Float3(0, 5, -15);
+	m_vPosition = Float3(0, 5, -15);
 	m_mView = IDENTITY;
-	m_mView.WAxis = pos;
+	m_mView.WAxis = m_vPosition;
 	m_fSpeed = 50.0f;
 }
 

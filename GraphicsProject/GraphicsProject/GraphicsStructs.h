@@ -38,3 +38,9 @@ struct TESTVRAM
 	Float4x4 VIEWMATRIX;
 	Float4x4 PROJECTIONMATRIX;
 };
+
+struct HULLCB
+{
+	Float3 camPos;
+	float pad;
+};

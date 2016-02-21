@@ -1,4 +1,7 @@
 #include "Shaders.h"
+#include "Generic_PS.csh"
+#include "HullShader.csh"
+#include "DomainShader.csh"
 
 Shaders* Shaders::m_pInstance = 0;
 
@@ -22,10 +25,20 @@ void Shaders::CreateShaders()
 		sizeof(Generic_PS),
 		NULL,
 		&m_pGeneric_PS);
+	Renderer::theDevicePtr->CreateHullShader(HullShader,
+		sizeof(HullShader),
+		NULL,
+		&m_pHullShader);
+	Renderer::theDevicePtr->CreateDomainShader(DomainShader,
+		sizeof(DomainShader),
+		NULL,
+		&m_pDomainShader);
 }
 
 void Shaders::unload()
 {
+	ReleaseCOM(m_pDomainShader);
+	ReleaseCOM(m_pHullShader);
 	ReleaseCOM(m_pGeneric_PS);
 	ReleaseCOM(m_pGeneric_VS);
 }

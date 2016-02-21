@@ -1,19 +1,19 @@
 // Input control point
 struct VS_CONTROL_POINT_OUTPUT
 {
-	float4 colorOut : COLOR;
-	float2 textureCoords : TEXTURE;
-	float3 normalOut : NORMAL;
-	float4 projectedCoordinate : POSITION2;
-	float3 position : POSITION;
+	float4 position : SV_POSITION;
+	float4 color : COLOR;
+	float2 textureCoords : TEXCOORD;
+	float3 normal : NORMAL;
 };
 
 // Output control point
 struct HS_CONTROL_POINT_OUTPUT
 {
-	float2 textureCoords : TEXTURE;
-	float3 normalOut : NORMAL;
-	float3 position : POSITION;
+	float4 position : SV_POSITION;
+	float4 color : COLOR;
+	float2 textureCoords : TEXCOORD;
+	float3 normal : NORMAL;
 };
 
 // Output patch constant data.
@@ -44,8 +44,8 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 	float dis = length(ip[PatchID].position - camPos);
 
 	dis /= max;
-	int tessFactor = 15;
-	tessFactor = (int)clamp(tessFactor - (dis * (float)tessFactor), 1, 15);
+	int tessFactor = 128;
+	tessFactor = (int)clamp(tessFactor /*- (dis * (float)tessFactor)*/, 1, 128);
 
 	// Insert code to compute Output here
 	Output.EdgeTessFactor[0] = 
@@ -69,8 +69,9 @@ HS_CONTROL_POINT_OUTPUT main(
 	HS_CONTROL_POINT_OUTPUT Output;
 
 	// Insert code to compute Output here
-	Output.position = ip[i].projectedCoordinate;
+	Output.position = ip[i].position;
+	Output.color = ip[i].color;
 	Output.textureCoords = ip[i].textureCoords;
-	Output.normalOut = ip[i].normalOut;
+	Output.normal = ip[i].normal;
 	return Output;
 }

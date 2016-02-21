@@ -58,6 +58,5 @@ public:
 	static void Shutdown();
 	static void ResizeBuffers();
 	static void Render(float deltaTime);
-
 };
 

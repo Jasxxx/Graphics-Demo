@@ -11,6 +11,7 @@ public:
 	Float4x4 m_mView;
 	Float4x4 m_mInvView;
 	Float4x4 m_mProjection;
+	Float3 m_vPosition;
 	POINT m_lpCurrentPosition;
 	POINT m_lpPreviousPosition;
 	bool buttonDown;

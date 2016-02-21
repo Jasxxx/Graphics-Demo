@@ -1,7 +1,6 @@
 #pragma once
 #include "Renderer.h"
 #include "Generic_VS.csh"
-#include "Generic_PS.csh"
 
 class Shaders
 {
@@ -10,6 +9,9 @@ private:
 public:
 	ID3D11VertexShader* m_pGeneric_VS;
 	ID3D11PixelShader* m_pGeneric_PS;
+	ID3D11HullShader* m_pHullShader;
+	ID3D11DomainShader* m_pDomainShader;
+
 	static Shaders* GetInstance();
 	void CreateShaders();
 	void unload();
