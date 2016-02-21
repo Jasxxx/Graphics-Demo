@@ -1,10 +1,12 @@
 #include "Camera.h"
 #include "BufferManager.h"
+
 Camera::Camera()
 {
 	Float3 pos = Float3(0, 5, -15);
 	m_mView = IDENTITY;
 	m_mView.WAxis = pos;
+	m_fSpeed = 50.0f;
 }
 
 Camera::~Camera()
@@ -18,23 +20,25 @@ void Camera::Update(int width, int height, float delta)
 	float deltaX = 0;
 	float deltaY = 0;
 
+	float moveFactor = m_fSpeed * delta;
+
 	if (GetAsyncKeyState('W'))
-		translation += Float3(0.0f, 0.0f, -delta);
+		translation += Float3(0.0f, 0.0f, -moveFactor);
 	// back
 	if (GetAsyncKeyState('S'))
-		translation += Float3(0.0f, 0.0f, delta);
+		translation += Float3(0.0f, 0.0f, moveFactor);
 	// left
 	if (GetAsyncKeyState('A'))
-		translation += Float3(delta, 0.0f, 0.0f);
+		translation += Float3(moveFactor, 0.0f, 0.0f);
 	// right
 	if (GetAsyncKeyState('D'))
-		translation += Float3(-delta, 0.0f, 0.0f);
+		translation += Float3(-moveFactor, 0.0f, 0.0f);
 	// up
 	if (GetAsyncKeyState('E'))
-		translation += Float3(0.0f, -delta, 0.0f);
+		translation += Float3(0.0f, -moveFactor, 0.0f);
 	// down
 	if (GetAsyncKeyState('Q'))
-		translation += Float3(0.0f, delta, 0.0f);
+		translation += Float3(0.0f, moveFactor, 0.0f);
 
 	if (GetAsyncKeyState(VK_RBUTTON))
 	{
@@ -49,12 +53,12 @@ void Camera::Update(int width, int height, float delta)
 
 	Float4x4 rotationX = IDENTITY;
 	Float4x4 rotationY = IDENTITY;
-	rotationX.makeRotationX((float)deltaY * delta * 0.5f);
-	rotationY.makeRotationY((float)deltaX * delta * 0.5f);
+	rotationX.makeRotationX((float)deltaY);
+	rotationY.makeRotationY((float)deltaX);
 
 	m_mView.translateLocal(translation.negate());
-	m_mView.rotateLocalX((float)-deltaY * delta * 0.5f);
-	m_mView.rotateLocalY((float)-deltaX * delta * 0.5f);
+	m_mView.rotateLocalX((float)-deltaY * moveFactor * 0.5f);
+	m_mView.rotateLocalY((float)-deltaX * moveFactor * 0.5f);
 
 	Float3 forward = m_mView.ZAxis;
 	Float3 up;
@@ -111,12 +115,12 @@ void Camera::Update(int width, int height, float delta)
 
 void Camera::BuildProjection(int width, int height)
 {
-	m_mProjection.makePerspectiveLH(65 * (XM_PI / 180), (float)(width / (float)height), 0.1f, 100.0f);
+	m_mProjection.makePerspectiveLH(65 * (XM_PI / 180), (float)(width / (float)height), 0.1f, 1000.0f);
 }
 
 void Camera::GetMVP(Float4x4 world, Float4x4& mvp)
 {
-	mvp = m_mInvView * world;
+	mvp = world * m_mInvView;
 	mvp = mvp * m_mProjection;
 }
 

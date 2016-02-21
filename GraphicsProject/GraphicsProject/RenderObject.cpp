@@ -25,7 +25,7 @@ RenderObject::RenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT)
 	m_strTexture = "vette_color";
 	m_pTexture = TextureManager::GetInstance()->GetTexture(m_strTexture);
 
-	m_Position = Float3(0, 0, 0);
+	m_vPosition = Float3(0, 0, 0);
 }
 
 RenderObject::~RenderObject()
@@ -55,7 +55,7 @@ void RenderObject::Render()
 	Float4x4 temp;
 
 	Float4x4 tempWorld = IDENTITY;
-	tempWorld.translateGlobal(m_Position.x, m_Position.y, m_Position.z);
+	tempWorld.translateGlobal(m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	Renderer::MainCamera->GetMVP(tempWorld, temp);
 
 	Renderer::toShader->gMVP = temp;

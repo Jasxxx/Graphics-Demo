@@ -20,6 +20,8 @@ private:
 
 	/// Interface to add and render all objects
 	static RenderList* m_pRenderList;
+
+	static ID3D11Debug* m_pDebug;
 public:
 	Renderer() {};
 	~Renderer() {};
@@ -55,7 +57,7 @@ public:
 	static void SetResolution(UINT _width, UINT _height);
 	static void Shutdown();
 	static void ResizeBuffers();
-	static void Render();
+	static void Render(float deltaTime);
 
 };
 

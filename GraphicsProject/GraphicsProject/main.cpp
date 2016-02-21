@@ -85,7 +85,7 @@ bool MAIN_APP::Run()
 {
 	Time.Signal();
 
-	Renderer::Render();
+	Renderer::Render(Time.Delta());
 	return true;
 }
 

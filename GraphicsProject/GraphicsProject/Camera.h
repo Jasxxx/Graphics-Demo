@@ -14,6 +14,8 @@ public:
 	POINT m_lpCurrentPosition;
 	POINT m_lpPreviousPosition;
 	bool buttonDown;
+	float m_fSpeed;
+
 	void Update(int width, int height, float delta);
 	void BuildProjection(int width, int height);
 	void GetMVP(Float4x4 world, Float4x4& mvp);

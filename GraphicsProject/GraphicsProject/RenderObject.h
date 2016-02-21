@@ -4,7 +4,7 @@
 
 class RenderObject
 {
-private:
+protected:
 	std::string m_strName;
 	std::string m_strTexture;
 	ID3D11Buffer* m_pVertexBuffer;
@@ -14,11 +14,11 @@ private:
 	D3D11_PRIMITIVE_TOPOLOGY m_uPrimitiveTopology;
 	ID3D11VertexShader* m_pVertexShader;
 	ID3D11PixelShader* m_pPixelShader;
-	Float3 m_Position;
+	Float3 m_vPosition;
 public:
 	RenderObject() {};
 	RenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	~RenderObject();
-	void Render();
+	virtual void Render();
 };
 

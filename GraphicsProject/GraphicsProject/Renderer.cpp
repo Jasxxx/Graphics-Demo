@@ -6,6 +6,7 @@
 #include "ConstantBuffers.h"
 #include "RenderList.h"
 #include "TextureManager.h"
+#include "TerrainRenderObject.h"
 
 using namespace std;
 using namespace DirectX;
@@ -32,6 +33,8 @@ cb_DEFAULT* Renderer::toShader = 0;
 
 Camera* Renderer::MainCamera = 0;
 RenderList* Renderer::m_pRenderList = 0;
+
+ID3D11Debug* Renderer::m_pDebug = 0;
 
 bool fullscreen = true;
 
@@ -141,6 +144,10 @@ void Renderer::Initialize(HWND hWnd, UINT resWidth, UINT resHeight)
 	m_pRenderList = new RenderList();
 
 	testOBJ = new RenderObject("Car");
+
+	TerrainRenderObject* terrain = new TerrainRenderObject("Plane");
+
+	m_pRenderList->AddRenderObject(terrain);
 	m_pRenderList->AddRenderObject(testOBJ);
 }
 
@@ -208,9 +215,9 @@ void Renderer::ResizeBuffers()
 	theContextPtr->VSSetConstantBuffers(0, 1, &constantBuffer);
 }
 
-void Renderer::Render()
+void Renderer::Render(float deltaTime)
 {
-	MainCamera->Update(resolutionWidth, resolutionHeight, 0.01f);
+	MainCamera->Update(resolutionWidth, resolutionHeight, deltaTime);
 
 	float clearColor[4] = { 1.0f, 0.41f, 0.71f, 1.0f };
 	theContextPtr->ClearRenderTargetView(theRenderTargetViewPtr, clearColor);
@@ -218,14 +225,18 @@ void Renderer::Render()
 
 	m_pRenderList->Render();
 
-	theSwapChainPtr->Present(0,0);
+	theSwapChainPtr->Present(0, 0);
 }
 
 
 void Renderer::Shutdown()
 {
 	theSwapChainPtr->SetFullscreenState(false, 0);
-	
+
+#if _DEBUG
+	theDevicePtr->QueryInterface(IID_PPV_ARGS(&m_pDebug));
+#endif
+
 	// release the d3d object and device
 	BufferManager::GetInstance()->unload();
 	Shaders::GetInstance()->unload();
@@ -250,4 +261,11 @@ void Renderer::Shutdown()
 	delete BufferManager::GetInstance();
 	delete TextureManager::GetInstance();
 	delete m_pRenderList;
+
+#if _DEBUG
+	if (m_pDebug)
+	{
+		m_pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	}
+#endif
 }
