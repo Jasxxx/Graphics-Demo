@@ -3,7 +3,7 @@
 
 Camera::Camera()
 {
-	m_vPosition = Float3(0, 5, -15);
+	m_vPosition = Float3(0, 100, -150);
 	m_mView = IDENTITY;
 	m_mView.WAxis = m_vPosition;
 	m_fSpeed = 50.0f;
@@ -40,14 +40,18 @@ void Camera::Update(int width, int height, float delta)
 	if (GetAsyncKeyState('Q'))
 		translation += Float3(0.0f, moveFactor, 0.0f);
 
-	if (GetAsyncKeyState(VK_RBUTTON))
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
 		GetCursorPos(&m_lpCurrentPosition);
-		SetCursorPos((int)(width), (int)(height));
+		SetCursorPos((int)(width)* 0.65f, (int)(height)* 0.65f);
 		GetCursorPos(&m_lpPreviousPosition);
-
+		ShowCursor(false);
 		deltaY = (float)(m_lpPreviousPosition.y - m_lpCurrentPosition.y);
 		deltaX = (float)(m_lpPreviousPosition.x - m_lpCurrentPosition.x);
+	}
+	else
+	{
+		ShowCursor(true);
 	}
 	// deffered context 
 
@@ -57,8 +61,8 @@ void Camera::Update(int width, int height, float delta)
 	rotationY.makeRotationY((float)deltaX);
 
 	m_mView.translateLocal(translation.negate());
-	m_mView.rotateLocalX((float)-deltaY * moveFactor * 0.5f);
-	m_mView.rotateLocalY((float)-deltaX * moveFactor * 0.5f);
+	m_mView.rotateLocalX((float)-deltaY * moveFactor * 0.1f);
+	m_mView.rotateLocalY((float)-deltaX * moveFactor * 0.1f);
 
 	Float3 forward = m_mView.ZAxis;
 	Float3 up;

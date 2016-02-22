@@ -30,8 +30,8 @@ OUTPUT_VERTEX main(INPUT_VERTEX input)
 
 	float4 vertex = float4(input.coordinate.xyz, 1);
 
-	//vertex = mul(vertex, WORLDMATRIX);
-	//vertex = mul(vertex, MVP);
+	vertex = mul(vertex, WORLDMATRIX);
+	vertex = mul(vertex, MVP);
 
 	output.position = vertex;
 	output.normal = input.normal;

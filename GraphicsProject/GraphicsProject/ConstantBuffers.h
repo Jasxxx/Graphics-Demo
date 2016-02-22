@@ -52,7 +52,7 @@ static void CreateConstantBuffer(ID3D11Buffer* cBuffer, D3D11_USAGE usage, D3D11
 
 	D3D11_BUFFER_DESC cBufferData;
 	ZeroMemory(&cBufferData, sizeof(cBufferData));
-	cBufferData.ByteWidth = sizeof(data);
+	cBufferData.ByteWidth = sizeof(&data);
 	cBufferData.Usage = usage;
 	cBufferData.BindFlags = flag;
 	cBufferData.CPUAccessFlags = access;

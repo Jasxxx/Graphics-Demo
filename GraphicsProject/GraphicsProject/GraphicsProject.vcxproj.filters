@@ -57,6 +57,9 @@
     <ClCompile Include="TerrainRenderObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SkySphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XTime.h">
@@ -107,6 +110,9 @@
     <ClInclude Include="TerrainRenderObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkySphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Trivial_PS.hlsl" />
@@ -116,8 +122,8 @@
     <FxCompile Include="HullShader.hlsl" />
     <FxCompile Include="DomainShader.hlsl" />
     <FxCompile Include="ComputeShader.hlsl" />
-    <FxCompile Include="General_PS.hlsl" />
     <FxCompile Include="Generic_VS.hlsl" />
     <FxCompile Include="Generic_PS.hlsl" />
+    <FxCompile Include="TerrainTess_VS.hlsl" />
   </ItemGroup>
 </Project>

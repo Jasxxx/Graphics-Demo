@@ -20,5 +20,6 @@ public:
 	RenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	~RenderObject();
 	virtual void Render();
+	void SetPosition(Float3 position){ m_vPosition = position; }
 };
 

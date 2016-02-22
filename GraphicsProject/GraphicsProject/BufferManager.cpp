@@ -63,3 +63,8 @@ void BufferManager::CreateVertexBuffer(std::string name)
 	vertexMap[name]->indexCount = uIndecies.size();
 	Renderer::theDevicePtr->CreateBuffer(&desc, &data, &vertexMap[name]->iBuffer);
 }
+
+void BufferManager::CreateEmptyVertexBuffer(std::string name)
+{
+	vertexMap[name] = new BUFFERINFO();
+}

@@ -7,6 +7,7 @@
 #include "RenderList.h"
 #include "TextureManager.h"
 #include "TerrainRenderObject.h"
+//#include "SkySphere.h";
 
 using namespace std;
 using namespace DirectX;
@@ -143,12 +144,15 @@ void Renderer::Initialize(HWND hWnd, UINT resWidth, UINT resHeight)
 
 	m_pRenderList = new RenderList();
 
-	//testOBJ = new RenderObject("Car");
+	testOBJ = new RenderObject("Car");
+	testOBJ->SetPosition(Float3(0, 0, 20));
 
 	TerrainRenderObject* terrain = new TerrainRenderObject("Plane", D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
+	//* sky = new SkySphere("Sky");
 
+	//m_pRenderList->AddRenderObject(sky);
 	m_pRenderList->AddRenderObject(terrain);
-	//m_pRenderList->AddRenderObject(testOBJ);
+	m_pRenderList->AddRenderObject(testOBJ);
 }
 
 void Renderer::SetResolution(UINT _width, UINT _height)
@@ -222,7 +226,7 @@ void Renderer::Render(float deltaTime)
 	float clearColor[4] = { 1.0f, 0.41f, 0.71f, 1.0f };
 	theContextPtr->ClearRenderTargetView(theRenderTargetViewPtr, clearColor);
 	theContextPtr->ClearDepthStencilView(theDepthStencilViewPtr, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
+	
 	m_pRenderList->Render();
 
 	theSwapChainPtr->Present(0, 0);

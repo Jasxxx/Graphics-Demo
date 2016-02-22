@@ -23,6 +23,7 @@ public:
 	void unload();
 	enum GBuffer_Type{DIFFUSE,NORMAL,SPECULAR,BUFFER_MAX};
 	void CreateVertexBuffer(std::string name);
+	void CreateEmptyVertexBuffer(std::string name);
 
 private:
 	static BufferManager* m_pInstance;

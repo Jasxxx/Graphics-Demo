@@ -7,7 +7,7 @@
 
 TerrainRenderObject::TerrainRenderObject(std::string name, D3D11_PRIMITIVE_TOPOLOGY primT) : RenderObject(name, primT)
 {
-	m_vPosition = Float3(0, 0, 0);
+	m_vPosition = Float3(0, -100.0f, 0);
 	m_pTexture = TextureManager::GetInstance()->GetTexture("Mount_Texture");
 	m_pHeightMap = TextureManager::GetInstance()->GetTexture("Mount_HeightMap");
 	/*	CreateConstantBuffer(
@@ -33,6 +33,7 @@ TerrainRenderObject::TerrainRenderObject(std::string name, D3D11_PRIMITIVE_TOPOL
 
 	m_pHullShader = Shaders::GetInstance()->m_pHullShader;
 	m_pDomainShader = Shaders::GetInstance()->m_pDomainShader;
+	m_pVertexShader = Shaders::GetInstance()->m_pTerrainTess_VS;
 }
 
 
